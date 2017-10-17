@@ -22,8 +22,10 @@ from phantom.action_result import ActionResult
 from whois_rdap_consts import *
 
 import simplejson as json
+import urllib2
 from ipwhois import IPWhois
 from ipwhois import IPDefinedError
+from os import environ
 
 
 class WhoisRDAPConnector(BaseConnector):
@@ -31,6 +33,7 @@ class WhoisRDAPConnector(BaseConnector):
     # actions supported by this script
     ACTION_ID_WHOIS_DOMAIN = "whois_domain"
     ACTION_ID_WHOIS_IP = "whois_ip"
+    ACTION_ID_TEST_CONNECTIVITY = 'test_connectivity'
 
     def __init__(self):
 
@@ -49,15 +52,9 @@ class WhoisRDAPConnector(BaseConnector):
 
         self.save_progress("Querying...")
 
-        try:
-            obj_whois = IPWhois(ip)
-            whois_response = obj_whois.lookup_rdap()
-        except IPDefinedError as e_defined:
-            self.debug_print("Got IPDefinedError exception str: {0}".format(str(e_defined)))
-            return action_result.set_status(phantom.APP_SUCCESS, str(e_defined))
-        except Exception as e:
-            self.debug_print("Got exception: type: {0}, str: {1}".format(type(e).__name__, str(e)))
-            return action_result.set_status(phantom.APP_ERROR, WHOIS_ERR_QUERY, e)
+        status, whois_response = self._lookup_rdap(ip)
+        if not status:
+            return status
 
         self.save_progress("Parsing response")
 
@@ -107,15 +104,9 @@ class WhoisRDAPConnector(BaseConnector):
 
         self.save_progress("Querying...")
 
-        try:
-            obj_whois = IPWhois(ip)
-            whois_response = obj_whois.lookup_rdap()
-        except IPDefinedError as e_defined:
-            self.debug_print("Got IPDefinedError exception str: {0}".format(str(e_defined)))
-            return self.set_status(phantom.APP_SUCCESS, str(e_defined))
-        except Exception as e:
-            self.debug_print("Got exception: type: {0}, str: {1}".format(type(e).__name__, str(e)))
-            return self.set_status(phantom.APP_ERROR, WHOIS_ERR_QUERY, e)
+        status, whois_response = self._lookup_rdap(ip)
+        if not status:
+            return status
 
         self.save_progress("Parsing response")
 
@@ -125,6 +116,30 @@ class WhoisRDAPConnector(BaseConnector):
 
         self.debug_print("identity test failed")
         return self.set_status_save_progress(phantom.APP_ERROR, WHOIS_ERR_CONNECTIVITY_TEST)
+
+    def _lookup_rdap(self, ip):
+        proxy = {}
+        if environ.get('HTTP_PROXY'):
+            proxy['http'] = environ['HTTP_PROXY']
+        if environ.get('HTTPS_PROXY'):
+            proxy['https'] = environ['HTTPS_PROXY']
+
+        try:
+            if proxy:
+                self.debug_print("Found proxy env. Using proxy for connection.")
+                handler = urllib2.ProxyHandler(proxy)
+                opener = urllib2.build_opener(handler)
+                obj_whois = IPWhois(ip, proxy_opener = opener)
+            else:
+                obj_whois = IPWhois(ip)
+            whois_response = obj_whois.lookup_rdap()
+            return phantom.APP_SUCCESS, whois_response
+        except IPDefinedError as e_defined:
+            self.debug_print("Got IPDefinedError exception str: {0}".format(str(e_defined)))
+            return self.set_status(phantom.APP_ERROR, str(e_defined)), None
+        except Exception as e:
+            self.debug_print("Got exception: type: {0}, str: {1}".format(type(e).__name__, str(e)))
+            return self.set_status(phantom.APP_ERROR, WHOIS_ERR_QUERY, e), None
 
     def handle_action(self, param):
         """Function that handles all the actions
@@ -140,7 +155,7 @@ class WhoisRDAPConnector(BaseConnector):
 
         if (action == self.ACTION_ID_WHOIS_IP):
             result = self._whois_ip(param)
-        elif (action == phantom.ACTION_ID_TEST_ASSET_CONNECTIVITY):
+        elif (action == self.ACTION_ID_TEST_CONNECTIVITY):
             self._test_asset_connectivity(param)
         else:
             result = self.unknown_action()
