@@ -6,12 +6,12 @@
     "publisher": "Phantom",
     "type": "information",
     "main_module"    : "whois_rdap_connector.pyc",
-    "app_version": "1.0.7",
+    "app_version": "1.0.8",
     "utctime_updated": "2017-04-29T02:30:58.000000Z",
     "product_vendor": "Generic",
     "product_name": "Whois RDAP",
     "product_version_regex": ".*",
-    "min_phantom_version": "1.2.283",
+    "min_phantom_version": "3.0.251",
     "license": "Copyright (c) Phantom Cyber Corporation 2016",
     "logo": "phantom.png",
     "configuration": {
@@ -321,6 +321,17 @@
           }
         ],
         "versions":"EQ(*)"
+      },
+      {
+        "action": "test connectivity",
+        "identifier": "test_connectivity",
+        "description": "Validate the asset configuration for connectivity using supplied configuration.",
+        "verbose": "",
+        "type": "test",
+        "read_only": true,
+        "parameters": {},
+        "output": [],
+        "versions": "EQ(*)"
       }
     ]
 }
