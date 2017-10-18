@@ -31,7 +31,6 @@ from os import environ
 class WhoisRDAPConnector(BaseConnector):
 
     # actions supported by this script
-    ACTION_ID_WHOIS_DOMAIN = "whois_domain"
     ACTION_ID_WHOIS_IP = "whois_ip"
     ACTION_ID_TEST_CONNECTIVITY = 'test_connectivity'
 
@@ -70,32 +69,25 @@ class WhoisRDAPConnector(BaseConnector):
         action_result.add_data(whois_response)
 
         summary = action_result.update_summary({})
-        message = ''
 
         # Create the summary and the message
         if ('asn_registry' in whois_response):
             summary.update({WHOIS_JSON_ASN_REGISTRY: whois_response['asn_registry']})
-            message += 'Registry: {0}'.format(summary[WHOIS_JSON_ASN_REGISTRY])
 
         if ('asn' in whois_response):
             summary.update({WHOIS_JSON_ASN: whois_response['asn']})
-            message += '\nASN: {0}'.format(summary[WHOIS_JSON_ASN])
 
         if ('asn_country_code' in whois_response):
             summary.update({WHOIS_JSON_COUNTRY_CODE: whois_response['asn_country_code']})
-            message += '\nCountry: {0}'.format(summary[WHOIS_JSON_COUNTRY_CODE])
 
         if ('network' in whois_response):
             nets = whois_response['network']
             wanted_keys = ['start_address', 'end_address']
             summary[WHOIS_JSON_NETS] = []
-            message += '\nNetwork:'
             summary_net = {x: nets[x] for x in wanted_keys}
             summary[WHOIS_JSON_NETS].append(summary_net)
-            message += '\nStart Address: {0}'.format(summary_net['start_address'])
-            message += '\nEnd Address: {0}'.format(summary_net['end_address'])
 
-        action_result.set_status(phantom.APP_SUCCESS, message)
+        action_result.set_status(phantom.APP_SUCCESS)
 
     def _test_asset_connectivity(self, param):
         ip = '8.8.8.8'
