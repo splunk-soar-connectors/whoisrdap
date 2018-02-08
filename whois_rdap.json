@@ -1,326 +1,334 @@
 {
-    "appid"       : "7241ecbd-4a79-4a86-99eb-b2ed8f3e7686",
-    "name"      : "WHOIS RDAP",
-    "description" : "This App implements the investigative action 'whois ip' using RDAP.",
+    "appid": "7241ecbd-4a79-4a86-99eb-b2ed8f3e7686",
+    "name": "WHOIS RDAP",
+    "description": "This App implements the investigative action 'whois ip' using RDAP.",
     "package_name": "phantom_whois_rdap",
     "publisher": "Phantom",
     "type": "information",
-    "main_module"    : "whois_rdap_connector.pyc",
-    "app_version": "1.0.7",
-    "utctime_updated": "2017-04-29T02:30:58.000000Z",
+    "main_module": "whois_rdap_connector.pyc",
+    "app_version": "1.0.11",
+    "utctime_updated": "2018-01-26T00:51:09.000000Z",
     "product_vendor": "Generic",
     "product_name": "Whois RDAP",
     "product_version_regex": ".*",
     "min_phantom_version": "1.2.283",
-    "license": "Copyright (c) Phantom Cyber Corporation 2016",
-    "logo": "phantom.png",
-    "configuration": {
-    },
+    "license": "Copyright (c) Phantom Cyber Corporation, 2016-2018",
+    "logo": "logo_phantom.svg",
+    "logo_dark": "logo_phantom_dark.svg",
+    "configuration": {},
     "actions": [
-     {
-        "action" : "whois ip",
-        "description": "Execute a whois lookup on the given IP",
-        "type": "investigate",
-        "identifier": "whois_ip",
-        "read_only": true,
-        "parameters": {
-          "ip": {
-            "description": "IP to query",
-            "data_type": "string",
-            "order": 0,
-            "contains": ["ip"],
-            "primary": true,
-            "required": true
-          }
-        },
-        "render": {
-          "type": "table",
-          "width": 12,
-          "height": 5,
-          "title": "Whois details"
-        },
-        "output": [
-          {
-            "data_path": "action_result.data.*.asn",
-            "data_type": "string",
-            "column_name": "Asn",
-            "column_order": 2
-          },
-          {
-            "data_path": "action_result.data.*.asn_cidr",
-            "data_type": "string",
-            "column_name": "Asn Cidr",
-            "column_order": 3
-          },
-          {
-            "data_path": "action_result.data.*.asn_country_code",
-            "data_type": "string",
-            "column_name": "Asn Country Code",
-            "column_order": 4
-          },
-          {
-            "data_path": "action_result.data.*.asn_date",
-            "data_type": "string",
-            "column_name": "Asn Date",
-            "column_order": 5
-          },
-          {
-            "data_path": "action_result.data.*.asn_registry",
-            "data_type": "string",
-            "column_name": "Asn Registry",
-            "column_order": 6
-          },
-          {
-            "data_path": "action_result.data.*.entities.*",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.network.cidr",
-            "data_type": "string",
-            "column_name": "Cidr",
-            "column_order": 7
-          },
-          {
-            "data_path": "action_result.data.*.network.country",
-            "data_type": "string",
-            "column_name": "Country",
-            "column_order": 8
-          },
-          {
-            "data_path": "action_result.data.*.network.handle",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.network.ip_version",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.network.links.*",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.network.name",
-            "data_type": "string",
-            "column_name": "Name",
-            "column_order": 9
-          },
-          {
-            "data_path": "action_result.data.*.network.parent_handle",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.network.start_address",
-            "data_type": "string",
-            "column_name": "Start Address",
-            "contains": [ "ip" ],
-            "column_order": 10
-          },
-          {
-            "data_path": "action_result.data.*.network.end_address",
-            "data_type": "string",
-            "column_name": "End Address",
-            "contains": [ "ip" ],
-            "column_order": 11
-          },
-          {
-            "data_path": "action_result.data.*.network.type",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.network.notices.*.title",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.network.notices.*.description",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.network.notices.*.links.*",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.network.remarks.*.title",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.network.remarks.*.description",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.network.remarks.*.links.*",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.network.status.*",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.network.events.*.action",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.network.events.*.timestamp",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.network.events.*.actor",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.entities.*",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.handle",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.links.*",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.roles.*",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.status.*",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.events.*.action",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.events.*.timestamp",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.events.*.actor",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.events_actor.*.action",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.events_actor.*.timestamp",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.notices.*.title",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.notices.*.description",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.notices.*.links.*",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.remarks.*.title",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.remarks.*.description",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.remarks.*.links.*",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.contact.address.*.type",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.contact.address.*.value",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.contact.email.*.type",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.contact.email.*.value",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.contact.kind",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.contact.name",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.contact.phone.*.type",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.contact.phone.*.value",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.contact.role",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.objects.*.contact.title",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.data.*.query",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.parameter.ip",
-            "data_type": "string",
-            "column_name": "IP",
-            "contains": [ "ip" ],
-            "column_order": 0
-          },
-          {
-            "data_path": "action_result.summary.asn",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.summary.country_code",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.summary.network.start_address",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.summary.network.end_address",
-            "data_type": "string"
-          },
-          {
-            "data_path": "action_result.summary.registry",
-            "data_type": "string"
-          },
-          {
-            "data_path": "summary.total_objects",
-            "data_type": "numeric"
-          },
-          {
-            "data_path": "action_result.status",
-            "data_type": "string",
-            "column_name": "status",
-            "column_order": 1
-          },
-          {
-            "data_path": "action_result.message",
-            "data_type": "string"
-          },
-          {
-            "data_path": "summary.total_objects_successful",
-            "data_type": "numeric"
-          }
-        ],
-        "versions":"EQ(*)"
-      }
+        {
+            "action": "whois ip",
+            "description": "Execute a whois lookup on the given IP",
+            "type": "investigate",
+            "identifier": "whois_ip",
+            "read_only": true,
+            "parameters": {
+                "ip": {
+                    "description": "IP to query",
+                    "data_type": "string",
+                    "order": 0,
+                    "contains": [
+                        "ip"
+                    ],
+                    "primary": true,
+                    "required": true
+                }
+            },
+            "render": {
+                "type": "table",
+                "width": 12,
+                "height": 5,
+                "title": "Whois details"
+            },
+            "output": [
+                {
+                    "data_path": "action_result.data.*.asn",
+                    "data_type": "string",
+                    "column_name": "Asn",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.data.*.asn_cidr",
+                    "data_type": "string",
+                    "column_name": "Asn Cidr",
+                    "column_order": 3
+                },
+                {
+                    "data_path": "action_result.data.*.asn_country_code",
+                    "data_type": "string",
+                    "column_name": "Asn Country Code",
+                    "column_order": 4
+                },
+                {
+                    "data_path": "action_result.data.*.asn_date",
+                    "data_type": "string",
+                    "column_name": "Asn Date",
+                    "column_order": 5
+                },
+                {
+                    "data_path": "action_result.data.*.asn_registry",
+                    "data_type": "string",
+                    "column_name": "Asn Registry",
+                    "column_order": 6
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.network.cidr",
+                    "data_type": "string",
+                    "column_name": "Cidr",
+                    "column_order": 7
+                },
+                {
+                    "data_path": "action_result.data.*.network.country",
+                    "data_type": "string",
+                    "column_name": "Country",
+                    "column_order": 8
+                },
+                {
+                    "data_path": "action_result.data.*.network.handle",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.network.ip_version",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.network.links.*",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.network.name",
+                    "data_type": "string",
+                    "column_name": "Name",
+                    "column_order": 9
+                },
+                {
+                    "data_path": "action_result.data.*.network.parent_handle",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.network.start_address",
+                    "data_type": "string",
+                    "column_name": "Start Address",
+                    "contains": [
+                        "ip"
+                    ],
+                    "column_order": 10
+                },
+                {
+                    "data_path": "action_result.data.*.network.end_address",
+                    "data_type": "string",
+                    "column_name": "End Address",
+                    "contains": [
+                        "ip"
+                    ],
+                    "column_order": 11
+                },
+                {
+                    "data_path": "action_result.data.*.network.type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.network.notices.*.title",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.network.notices.*.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.network.notices.*.links.*",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.network.remarks.*.title",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.network.remarks.*.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.network.remarks.*.links.*",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.network.status.*",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.network.events.*.action",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.network.events.*.timestamp",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.network.events.*.actor",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.entities.*",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.handle",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.links.*",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.roles.*",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.status.*",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.events.*.action",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.events.*.timestamp",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.events.*.actor",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.events_actor.*.action",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.events_actor.*.timestamp",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.notices.*.title",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.notices.*.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.notices.*.links.*",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.remarks.*.title",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.remarks.*.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.remarks.*.links.*",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.contact.address.*.type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.contact.address.*.value",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.contact.email.*.type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.contact.email.*.value",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.contact.kind",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.contact.name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.contact.phone.*.type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.contact.phone.*.value",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.contact.role",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.contact.title",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.query",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.ip",
+                    "data_type": "string",
+                    "column_name": "IP",
+                    "contains": [
+                        "ip"
+                    ],
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.summary.asn",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.country_code",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.network.start_address",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.network.end_address",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.registry",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "versions": "EQ(*)"
+        }
     ]
 }
