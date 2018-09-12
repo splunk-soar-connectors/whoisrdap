@@ -1,7 +1,7 @@
 # --
 # File: whois_connector.py
 #
-# Copyright (c) Phantom Cyber Corporation, 2014-2016
+# Copyright (c) Phantom Cyber Corporation, 2014-2018
 #
 # This unpublished material is proprietary to Phantom Cyber.
 # All rights reserved. The methods and
@@ -21,7 +21,7 @@ from phantom.action_result import ActionResult
 # THIS Connector imports
 from whois_rdap_consts import *
 
-import simplejson as json
+import json
 import urllib2
 from ipwhois import IPWhois
 from ipwhois import IPDefinedError
@@ -121,7 +121,7 @@ class WhoisRDAPConnector(BaseConnector):
                 self.debug_print("Found proxy env. Using proxy for connection.")
                 handler = urllib2.ProxyHandler(proxy)
                 opener = urllib2.build_opener(handler)
-                obj_whois = IPWhois(ip, proxy_opener = opener)
+                obj_whois = IPWhois(ip, proxy_opener=opener)
             else:
                 obj_whois = IPWhois(ip)
             whois_response = obj_whois.lookup_rdap()
@@ -154,10 +154,10 @@ class WhoisRDAPConnector(BaseConnector):
 
         return result
 
+
 if __name__ == '__main__':
 
     import sys
-    # import simplejson as json
     import pudb
 
     pudb.set_trace()
