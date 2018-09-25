@@ -1,7 +1,7 @@
 {
     "appid": "7241ecbd-4a79-4a86-99eb-b2ed8f3e7686",
     "name": "WHOIS RDAP",
-    "description": "This App implements the investigative action 'whois ip' using RDAP.",
+    "description": "This app implements investigative actions using RDAP",
     "package_name": "phantom_whois_rdap",
     "publisher": "Phantom",
     "type": "information",
@@ -11,7 +11,7 @@
     "product_vendor": "Generic",
     "product_name": "Whois RDAP",
     "product_version_regex": ".*",
-    "min_phantom_version": "3.5.180",
+    "min_phantom_version": "3.5.210",
     "license": "Copyright (c) 2016-2018 Splunk Inc.",
     "logo": "logo_phantom.svg",
     "logo_dark": "logo_phantom_dark.svg",
@@ -333,7 +333,7 @@
         {
             "action": "test connectivity",
             "identifier": "test_connectivity",
-            "description": "Validate the asset configuration for connectivity using supplied configuration.",
+            "description": "Validate the asset configuration for connectivity using supplied configuration",
             "verbose": "",
             "type": "test",
             "read_only": true,
