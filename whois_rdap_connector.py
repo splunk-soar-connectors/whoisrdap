@@ -43,9 +43,15 @@ class WhoisRDAPConnector(BaseConnector):
 
         self.save_progress("Querying...")
 
-        status, whois_response = self._lookup_rdap(ip)
-        if not status:
-            return status
+        try:
+            obj_whois = IPWhois(ip)
+            whois_response = obj_whois.lookup_rdap()
+        except IPDefinedError as e_defined:
+            self.debug_print("Got IPDefinedError exception str: {0}".format(str(e_defined)))
+            return action_result.set_status(phantom.APP_SUCCESS, str(e_defined))
+        except Exception as e:
+            self.debug_print("Got exception: type: {0}, str: {1}".format(type(e).__name__, str(e)))
+            return action_result.set_status(phantom.APP_ERROR, WHOIS_ERR_QUERY, e)
 
         self.save_progress("Parsing response")
 
