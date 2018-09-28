@@ -43,9 +43,10 @@ class WhoisRDAPConnector(BaseConnector):
 
         self.save_progress("Querying...")
 
-        status, whois_response = self._lookup_rdap(ip)
-        if not status:
-            return status
+        status, whois_response = self._lookup_rdap(action_result, ip)
+
+        if phantom.is_fail(status):
+            return action_result.get_status()
 
         self.save_progress("Parsing response")
 
@@ -88,7 +89,7 @@ class WhoisRDAPConnector(BaseConnector):
 
         self.save_progress("Querying...")
 
-        status, whois_response = self._lookup_rdap(ip)
+        status, whois_response = self._lookup_rdap(self, ip)
         if not status:
             return status
 
@@ -101,7 +102,8 @@ class WhoisRDAPConnector(BaseConnector):
         self.debug_print("identity test failed")
         return self.set_status_save_progress(phantom.APP_ERROR, WHOIS_ERR_CONNECTIVITY_TEST)
 
-    def _lookup_rdap(self, ip):
+    def _lookup_rdap(self, action_result, ip):
+
         proxy = {}
         if environ.get('HTTP_PROXY'):
             proxy['http'] = environ['HTTP_PROXY']
@@ -119,11 +121,12 @@ class WhoisRDAPConnector(BaseConnector):
             whois_response = obj_whois.lookup_rdap()
             return phantom.APP_SUCCESS, whois_response
         except IPDefinedError as e_defined:
-            self.debug_print("Got IPDefinedError exception str: {0}".format(str(e_defined)))
-            return self.set_status(phantom.APP_ERROR, str(e_defined)), None
+            self.debug_print("Got IPDefinedError: {0}".format(str(e_defined)))
+            action_result.set_status(phantom.APP_SUCCESS, str(e_defined))
+            return phantom.APP_ERROR, None
         except Exception as e:
             self.debug_print("Got exception: type: {0}, str: {1}".format(type(e).__name__, str(e)))
-            return self.set_status(phantom.APP_ERROR, WHOIS_ERR_QUERY, e), None
+            return action_result.set_status(phantom.APP_ERROR, WHOIS_ERR_QUERY, e), None
 
     def handle_action(self, param):
         """Function that handles all the actions
