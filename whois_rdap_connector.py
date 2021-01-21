@@ -1,5 +1,5 @@
 # File: whois_rdap_connector.py
-# Copyright (c) 2016-2018 Splunk Inc.
+# Copyright (c) 2016-2021 Splunk Inc.
 #
 # SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
 # without a valid written license from Splunk Inc. is PROHIBITED.
@@ -14,7 +14,10 @@ from phantom.action_result import ActionResult
 from whois_rdap_consts import *
 
 import json
-import urllib2
+try:
+    from urllib2 import ProxyHandler, build_opener
+except ImportError:
+    from urllib.request import ProxyHandler, build_opener
 from ipwhois import IPWhois
 from ipwhois import IPDefinedError
 from os import environ
@@ -113,8 +116,8 @@ class WhoisRDAPConnector(BaseConnector):
         try:
             if proxy:
                 self.debug_print("Found proxy env. Using proxy for connection.")
-                handler = urllib2.ProxyHandler(proxy)
-                opener = urllib2.build_opener(handler)
+                handler = ProxyHandler(proxy)
+                opener = build_opener(handler)
                 obj_whois = IPWhois(ip, proxy_opener=opener)
             else:
                 obj_whois = IPWhois(ip)
@@ -165,6 +168,6 @@ if __name__ == '__main__':
         connector = WhoisRDAPConnector()
         connector.print_progress_message = True
         ret_val = connector._handle_action(json.dumps(in_json), None)
-        print json.dumps(json.loads(ret_val), indent=4)
+        print(json.dumps(json.loads(ret_val), indent=4))
 
     exit(0)
