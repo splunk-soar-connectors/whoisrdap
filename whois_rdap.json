@@ -29,8 +29,8 @@
             }
         ]
     },
-    "logo": "logo_phantom.svg",
-    "logo_dark": "logo_phantom_dark.svg",
+    "logo": "logo_splunk.svg",
+    "logo_dark": "logo_splunk_dark.svg",
     "configuration": {},
     "actions": [
         {
