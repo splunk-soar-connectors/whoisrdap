@@ -18,16 +18,7 @@
     "python_version": "3",
     "license": "Copyright (c) 2016-2021 Splunk Inc.",
     "pip_dependencies": {
-        "wheel": [
-            {
-                "module": "dns",
-                "input_file": "dnspython/dnspython-1.16.0-py2.py3-none-any.whl"
-            },
-            {
-                "module": "ipwhois",
-                "input_file": "ipwhois/ipwhois-1.1.0-py2.py3-none-any.whl"
-            }
-        ]
+        "wheel": []
     },
     "logo": "logo_splunk.svg",
     "logo_dark": "logo_splunk_dark.svg",
