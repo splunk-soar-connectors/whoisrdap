@@ -14,23 +14,22 @@
 # and limitations under the License.
 #
 #
-# Phantom imports
+import json
+
 import phantom.app as phantom
-
-from phantom.base_connector import BaseConnector
 from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
 
-# THIS Connector imports
 from whois_rdap_consts import *
 
-import json
 try:
     from urllib2 import ProxyHandler, build_opener
 except ImportError:
     from urllib.request import ProxyHandler, build_opener
-from ipwhois import IPWhois
-from ipwhois import IPDefinedError
+
 from os import environ
+
+from ipwhois import IPDefinedError, IPWhois
 
 
 class WhoisRDAPConnector(BaseConnector):
@@ -166,6 +165,7 @@ class WhoisRDAPConnector(BaseConnector):
 if __name__ == '__main__':
 
     import sys
+
     import pudb
 
     pudb.set_trace()
