@@ -17,7 +17,7 @@
         "ipwhois-1.1.0"
     ],
     "python_version": "3",
-    "license": "Copyright (c) 2016-2021 Splunk Inc.",
+    "license": "Copyright (c) 2016-2022 Splunk Inc.",
     "pip_dependencies": {
         "wheel": [
             {
