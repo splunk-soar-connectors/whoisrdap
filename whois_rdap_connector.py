@@ -94,7 +94,7 @@ class WhoisRDAPConnector(BaseConnector):
 
         action_result.set_status(phantom.APP_SUCCESS)
 
-    def _test_asset_connectivity(self, param):
+    def _handle_test_connectivity(self, param):
         ip = '8.8.8.8'
 
         self.debug_print("Validating/Querying IP '{0}'".format(ip))
@@ -155,7 +155,7 @@ class WhoisRDAPConnector(BaseConnector):
         if (action == self.ACTION_ID_WHOIS_IP):
             result = self._whois_ip(param)
         elif (action == self.ACTION_ID_TEST_CONNECTIVITY):
-            self._test_asset_connectivity(param)
+            self._handle_test_connectivity(param)
         else:
             result = self.unknown_action()
 
