@@ -1,0 +1,15 @@
+Splunk SOAR WHOIS RDAP
+Copyright (c) 2016-2022 Splunk Inc.
+
+Third-party Software Attributions:
+
+Library: dnspython
+Version: 1.16.0
+License: ISC
+Copyright 2001-2017 Nominum, Inc
+Copyright Dnspython Contributors
+
+Library: ipwhois
+Version: 1.1.0
+License: BSD 2
+Copyright 2013-2019 Philip Hane

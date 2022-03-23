@@ -1,26 +1,35 @@
 # File: whois_rdap_connector.py
-# Copyright (c) 2016-2021 Splunk Inc.
 #
-# SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
-# without a valid written license from Splunk Inc. is PROHIBITED.
+# Copyright (c) 2016-2022 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software distributed under
+# the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied. See the License for the specific language governing permissions
+# and limitations under the License.
+#
+#
+import json
 
-# Phantom imports
 import phantom.app as phantom
-
-from phantom.base_connector import BaseConnector
 from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
 
-# THIS Connector imports
 from whois_rdap_consts import *
 
-import json
 try:
     from urllib2 import ProxyHandler, build_opener
 except ImportError:
     from urllib.request import ProxyHandler, build_opener
-from ipwhois import IPWhois
-from ipwhois import IPDefinedError
+
 from os import environ
+
+from ipwhois import IPDefinedError, IPWhois
 
 
 class WhoisRDAPConnector(BaseConnector):
@@ -85,7 +94,7 @@ class WhoisRDAPConnector(BaseConnector):
 
         action_result.set_status(phantom.APP_SUCCESS)
 
-    def _test_asset_connectivity(self, param):
+    def _handle_test_connectivity(self, param):
         ip = '8.8.8.8'
 
         self.debug_print("Validating/Querying IP '{0}'".format(ip))
@@ -146,7 +155,7 @@ class WhoisRDAPConnector(BaseConnector):
         if (action == self.ACTION_ID_WHOIS_IP):
             result = self._whois_ip(param)
         elif (action == self.ACTION_ID_TEST_CONNECTIVITY):
-            self._test_asset_connectivity(param)
+            self._handle_test_connectivity(param)
         else:
             result = self.unknown_action()
 
@@ -156,6 +165,7 @@ class WhoisRDAPConnector(BaseConnector):
 if __name__ == '__main__':
 
     import sys
+
     import pudb
 
     pudb.set_trace()
@@ -170,4 +180,4 @@ if __name__ == '__main__':
         ret_val = connector._handle_action(json.dumps(in_json), None)
         print(json.dumps(json.loads(ret_val), indent=4))
 
-    exit(0)
+    sys.exit(0)
