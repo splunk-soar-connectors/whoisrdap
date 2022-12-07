@@ -109,10 +109,10 @@ class WhoisRDAPConnector(BaseConnector):
 
         if whois_response["query"] and whois_response["query"] == ip:
             self.debug_print("identity test passed")
-            return self.set_status_save_progress(phantom.APP_SUCCESS, WHOIS_SUCC_CONNECTIVITY_TEST)
+            return self.set_status_save_progress(phantom.APP_SUCCESS, WHOIS_SUCCESS_CONNECTIVITY_TEST)
 
         self.debug_print("identity test failed")
-        return self.set_status_save_progress(phantom.APP_ERROR, WHOIS_ERR_CONNECTIVITY_TEST)
+        return self.set_status_save_progress(phantom.APP_ERROR, WHOIS_ERROR_CONNECTIVITY_TEST)
 
     def _lookup_rdap(self, action_result, ip):
 
@@ -138,7 +138,7 @@ class WhoisRDAPConnector(BaseConnector):
             return phantom.APP_ERROR, None
         except Exception as e:
             self.error_print("Got exception object: ", e)
-            return action_result.set_status(phantom.APP_ERROR, WHOIS_ERR_QUERY, e), None
+            return action_result.set_status(phantom.APP_ERROR, WHOIS_ERROR_QUERY, e), None
 
     def handle_action(self, param):
         """Function that handles all the actions

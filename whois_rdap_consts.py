@@ -15,10 +15,10 @@
 #
 #
 # Json keys
-WHOIS_ERR_QUERY = "Whois query failed"
-WHOIS_SUCC_QUERY = "Whois query successful"
-WHOIS_SUCC_CONNECTIVITY_TEST = "Connectivity test passed"
-WHOIS_ERR_CONNECTIVITY_TEST = "Connectivity test failed"
+WHOIS_ERROR_QUERY = "Whois query failed"
+WHOIS_SUCCESS_QUERY = "Whois query successful"
+WHOIS_SUCCESS_CONNECTIVITY_TEST = "Connectivity test passed"
+WHOIS_ERROR_CONNECTIVITY_TEST = "Connectivity test failed"
 
 WHOIS_JSON_ASN_REGISTRY = "registry"
 WHOIS_JSON_ASN = "asn"

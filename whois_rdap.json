@@ -14,7 +14,7 @@
     "min_phantom_version": "5.3.5",
     "fips_compliant": true,
     "latest_tested_versions": [
-        "ipwhois-1.1.0"
+        "ipwhois-1.2.0"
     ],
     "python_version": "3",
     "license": "Copyright (c) 2016-2022 Splunk Inc.",
