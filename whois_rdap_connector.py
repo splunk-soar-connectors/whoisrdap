@@ -133,11 +133,11 @@ class WhoisRDAPConnector(BaseConnector):
             whois_response = obj_whois.lookup_rdap()
             return phantom.APP_SUCCESS, whois_response
         except IPDefinedError as e_defined:
-            self.debug_print("Got IPDefinedError: {0}".format(str(e_defined)))
+            self.error_print("Got IPDefinedError: ", e_defined)
             action_result.set_status(phantom.APP_SUCCESS, str(e_defined))
             return phantom.APP_ERROR, None
         except Exception as e:
-            self.debug_print("Got exception: type: {0}, str: {1}".format(type(e).__name__, str(e)))
+            self.error_print("Got exception object: ", e)
             return action_result.set_status(phantom.APP_ERROR, WHOIS_ERR_QUERY, e), None
 
     def handle_action(self, param):

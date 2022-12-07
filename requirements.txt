@@ -1,2 +1,2 @@
 dnspython==1.16.0
-ipwhois==1.1.0
+ipwhois==1.2.0
