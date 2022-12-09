@@ -46,7 +46,8 @@
                     "data_type": "string",
                     "order": 0,
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ],
                     "primary": true,
                     "required": true
@@ -74,11 +75,13 @@
                     "data_type": "string",
                     "column_name": "IP",
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ],
                     "column_order": 0,
                     "example_values": [
-                        "8.8.8.8"
+                        "8.8.8.8",
+                        "2001:4860:4860::8888"
                     ]
                 },
                 {
@@ -109,7 +112,7 @@
                     "data_path": "action_result.data.*.asn_description",
                     "data_type": "string",
                     "example_values": [
-                        "DNIC-AS-00749, US"
+                        "DNIC-AS-99999, US"
                     ]
                 },
                 {
@@ -139,7 +142,8 @@
                     "data_type": "string",
                     "column_name": "End Address",
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ],
                     "column_order": 11
                 },
@@ -222,7 +226,8 @@
                     "data_type": "string",
                     "column_name": "Start Address",
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ],
                     "column_order": 10
                 },
@@ -398,14 +403,14 @@
                     "data_path": "action_result.summary.network.*.end_address",
                     "data_type": "string",
                     "example_values": [
-                        "33.255.255.255"
+                        "8.255.255.255"
                     ]
                 },
                 {
                     "data_path": "action_result.summary.network.*.start_address",
                     "data_type": "string",
                     "example_values": [
-                        "33.0.0.0"
+                        "8.0.0.0"
                     ]
                 },
                 {
@@ -432,6 +437,201 @@
                     "example_values": [
                         1
                     ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.raw",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.cidr",
+                    "data_type": "string",
+                    "example_values": [
+                        "223.130.192.0/20"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "Test Cloud Corp."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.range",
+                    "data_type": "string",
+                    "example_values": [
+                        "223.130.192.0 - 223.130.207.255"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.handle",
+                    "data_type": "string",
+                    "example_values": [
+                        "NBP-NET"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.address",
+                    "data_type": "string",
+                    "example_values": [
+                        "Gyeonggi-do Bundang-gu, Seongnam-si Bundangnaegok-ro 131"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.country",
+                    "data_type": "string",
+                    "example_values": [
+                        "KR"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.created",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-06-16T00:00:00"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.updated",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.contacts.tech",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.contacts.admin.email",
+                    "data_type": "string",
+                    "example_values": [
+                        "test@testcorp.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.nameservers",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.postal_code",
+                    "data_type": "string",
+                    "example_values": [
+                        "99999"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.contacts.tech.email",
+                    "data_type": "string",
+                    "example_values": [
+                        "test@testcorp.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.contacts.admin",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.nir.query",
+                    "data_type": "string",
+                    "example_values": [
+                        "223.130.195.200"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.network.events",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.events",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.contacts.tech.fax",
+                    "data_type": "string",
+                    "example_values": [
+                        "9999-47-4360"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.contacts.tech.phone",
+                    "data_type": "string",
+                    "example_values": [
+                        "9999-48-1134"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.contacts.tech.updated",
+                    "data_type": "string",
+                    "example_values": [
+                        "2020-08-05T07:02:05"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.contacts.tech.division",
+                    "data_type": "string",
+                    "example_values": [
+                        "testdivision"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.contacts.tech.organization",
+                    "data_type": "string",
+                    "example_values": [
+                        "Iki City"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.contacts.admin.fax",
+                    "data_type": "string",
+                    "example_values": [
+                        "9999-47-4360"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.contacts.admin.phone",
+                    "data_type": "string",
+                    "example_values": [
+                        "9999-48-1134"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.contacts.admin.updated",
+                    "data_type": "string",
+                    "example_values": [
+                        "2020-08-05T07:02:05"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.contacts.admin.division",
+                    "data_type": "string",
+                    "example_values": [
+                        "testdivision"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nir.nets.*.contacts.admin.organization",
+                    "data_type": "string",
+                    "example_values": [
+                        "Iki City"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.network.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.roles",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.notices.*.links",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.contact.address",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.objects.*.links",
+                    "data_type": "string"
                 }
             ],
             "versions": "EQ(*)"

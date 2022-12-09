@@ -14,6 +14,7 @@
 # and limitations under the License.
 #
 #
+import ipaddress
 import json
 
 import phantom.app as phantom
@@ -43,6 +44,26 @@ class WhoisRDAPConnector(BaseConnector):
         # Call the BaseConnectors init first
         super(WhoisRDAPConnector, self).__init__()
 
+    def _is_valid_ip(self, input_ip_address):
+        """ Function that checks given address and return True if address is valid IPv4 or IPV6 address.
+
+        :param input_ip_address: IP address
+        :return: status (success/failure)
+        """
+
+        try:
+            ipaddress.ip_address(input_ip_address)
+        except Exception:
+            return False
+
+        return True
+
+    def initialize(self):
+        # use this to store data that needs to be accessed across actions
+        self._state = self.load_state()
+        self.set_validator('ipv6', self._is_valid_ip)
+        return phantom.APP_SUCCESS
+
     def _whois_ip(self, param):
 
         ip = param[phantom.APP_JSON_IP]
@@ -66,7 +87,7 @@ class WhoisRDAPConnector(BaseConnector):
         # but the keys aren't needed since they are also stored in object.[key].handle
         # changing this to a list
 
-        if whois_response["objects"]:
+        if whois_response.get("objects"):
             objects = whois_response["objects"]
             new_objects = [objects[key] for key in objects]
             whois_response["objects"] = new_objects
@@ -107,7 +128,7 @@ class WhoisRDAPConnector(BaseConnector):
 
         self.save_progress("Parsing response")
 
-        if whois_response["query"] and whois_response["query"] == ip:
+        if whois_response.get("query", None) and whois_response.get("query", None) == ip:
             self.debug_print("identity test passed")
             return self.set_status_save_progress(phantom.APP_SUCCESS, WHOIS_SUCCESS_CONNECTIVITY_TEST)
 
@@ -124,7 +145,6 @@ class WhoisRDAPConnector(BaseConnector):
 
         try:
             if proxy:
-                self.debug_print("Found proxy env. Using proxy for connection.")
                 handler = ProxyHandler(proxy)
                 opener = build_opener(handler)
                 obj_whois = IPWhois(ip, proxy_opener=opener)
@@ -139,6 +159,11 @@ class WhoisRDAPConnector(BaseConnector):
         except Exception as e:
             self.error_print("Got exception object: ", e)
             return action_result.set_status(phantom.APP_ERROR, WHOIS_ERROR_QUERY, e), None
+
+    def finalize(self):
+        # Save the state, this data is saved across actions and app upgrades
+        self.save_state(self._state)
+        return phantom.APP_SUCCESS
 
     def handle_action(self, param):
         """Function that handles all the actions
