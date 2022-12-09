@@ -15,7 +15,7 @@
 #
 #
 # Json keys
-WHOIS_ERROR_QUERY = "Whois query failed"
+WHOIS_ERROR_QUERY = "Whois query failed. Error: {}"
 WHOIS_SUCCESS_QUERY = "Whois query successful"
 WHOIS_SUCCESS_CONNECTIVITY_TEST = "Connectivity test passed"
 WHOIS_ERROR_CONNECTIVITY_TEST = "Connectivity test failed"

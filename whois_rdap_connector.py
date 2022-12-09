@@ -145,6 +145,7 @@ class WhoisRDAPConnector(BaseConnector):
 
         try:
             if proxy:
+                self.debug_print("Found proxy env. Using proxy for connection.")
                 handler = ProxyHandler(proxy)
                 opener = build_opener(handler)
                 obj_whois = IPWhois(ip, proxy_opener=opener)
@@ -158,7 +159,7 @@ class WhoisRDAPConnector(BaseConnector):
             return phantom.APP_ERROR, None
         except Exception as e:
             self.error_print("Got exception object: ", e)
-            return action_result.set_status(phantom.APP_ERROR, WHOIS_ERROR_QUERY, e), None
+            return action_result.set_status(phantom.APP_ERROR, WHOIS_ERROR_QUERY.format(e)), None
 
     def finalize(self):
         # Save the state, this data is saved across actions and app upgrades
