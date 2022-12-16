@@ -42,7 +42,7 @@
             "read_only": true,
             "parameters": {
                 "ip": {
-                    "description": "IP to query",
+                    "description": "IPv4 or IPv6 address to query",
                     "data_type": "string",
                     "order": 0,
                     "contains": [
@@ -392,53 +392,6 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.summary.asn",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.summary.country_code",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.summary.network.*.end_address",
-                    "data_type": "string",
-                    "example_values": [
-                        "8.255.255.255"
-                    ]
-                },
-                {
-                    "data_path": "action_result.summary.network.*.start_address",
-                    "data_type": "string",
-                    "example_values": [
-                        "8.0.0.0"
-                    ]
-                },
-                {
-                    "data_path": "action_result.summary.registry",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.message",
-                    "data_type": "string",
-                    "example_values": [
-                        "Network: [{'start_address': '8.8.8.0', 'end_address': '8.8.8.255'}], Registry: test, Country code: US, Asn: 11111"
-                    ]
-                },
-                {
-                    "data_path": "summary.total_objects",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
-                    "data_path": "summary.total_objects_successful",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.nir.raw",
                     "data_type": "string"
                 },
@@ -632,6 +585,53 @@
                 {
                     "data_path": "action_result.data.*.objects.*.links",
                     "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.asn",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.country_code",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.network.*.end_address",
+                    "data_type": "string",
+                    "example_values": [
+                        "8.255.255.255"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.network.*.start_address",
+                    "data_type": "string",
+                    "example_values": [
+                        "8.0.0.0"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.registry",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Network: [{'start_address': '8.8.8.0', 'end_address': '8.8.8.255'}], Registry: test, Country code: US, Asn: 11111"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
                 }
             ],
             "versions": "EQ(*)"
