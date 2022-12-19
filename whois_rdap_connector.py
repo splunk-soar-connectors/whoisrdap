@@ -128,7 +128,7 @@ class WhoisRDAPConnector(BaseConnector):
 
         self.save_progress("Parsing response")
 
-        if whois_response.get("query", None) and whois_response.get("query", None) == ip:
+        if whois_response.get("query") and whois_response.get("query") == ip:
             self.debug_print("identity test passed")
             return self.set_status_save_progress(phantom.APP_SUCCESS, WHOIS_SUCCESS_CONNECTIVITY_TEST)
 
