@@ -14,6 +14,7 @@
 # and limitations under the License.
 #
 #
+import ipaddress
 import json
 
 import phantom.app as phantom
@@ -43,6 +44,26 @@ class WhoisRDAPConnector(BaseConnector):
         # Call the BaseConnectors init first
         super(WhoisRDAPConnector, self).__init__()
 
+    def _is_valid_ip(self, input_ip_address):
+        """ Function that checks given address and return True if address is valid IPv4 or IPV6 address.
+
+        :param input_ip_address: IP address
+        :return: status (success/failure)
+        """
+
+        try:
+            ipaddress.ip_address(input_ip_address)
+        except Exception:
+            return False
+
+        return True
+
+    def initialize(self):
+        # use this to store data that needs to be accessed across actions
+        self._state = self.load_state()
+        self.set_validator('ipv6', self._is_valid_ip)
+        return phantom.APP_SUCCESS
+
     def _whois_ip(self, param):
 
         ip = param[phantom.APP_JSON_IP]
@@ -66,7 +87,7 @@ class WhoisRDAPConnector(BaseConnector):
         # but the keys aren't needed since they are also stored in object.[key].handle
         # changing this to a list
 
-        if whois_response["objects"]:
+        if whois_response.get("objects"):
             objects = whois_response["objects"]
             new_objects = [objects[key] for key in objects]
             whois_response["objects"] = new_objects
@@ -107,12 +128,12 @@ class WhoisRDAPConnector(BaseConnector):
 
         self.save_progress("Parsing response")
 
-        if whois_response["query"] and whois_response["query"] == ip:
+        if whois_response.get("query") and whois_response.get("query") == ip:
             self.debug_print("identity test passed")
-            return self.set_status_save_progress(phantom.APP_SUCCESS, WHOIS_SUCC_CONNECTIVITY_TEST)
+            return self.set_status_save_progress(phantom.APP_SUCCESS, WHOIS_SUCCESS_CONNECTIVITY_TEST)
 
         self.debug_print("identity test failed")
-        return self.set_status_save_progress(phantom.APP_ERROR, WHOIS_ERR_CONNECTIVITY_TEST)
+        return self.set_status_save_progress(phantom.APP_ERROR, WHOIS_ERROR_CONNECTIVITY_TEST)
 
     def _lookup_rdap(self, action_result, ip):
 
@@ -133,12 +154,17 @@ class WhoisRDAPConnector(BaseConnector):
             whois_response = obj_whois.lookup_rdap()
             return phantom.APP_SUCCESS, whois_response
         except IPDefinedError as e_defined:
-            self.debug_print("Got IPDefinedError: {0}".format(str(e_defined)))
+            self.error_print("Got IPDefinedError: ", e_defined)
             action_result.set_status(phantom.APP_SUCCESS, str(e_defined))
             return phantom.APP_ERROR, None
         except Exception as e:
-            self.debug_print("Got exception: type: {0}, str: {1}".format(type(e).__name__, str(e)))
-            return action_result.set_status(phantom.APP_ERROR, WHOIS_ERR_QUERY, e), None
+            self.error_print("Got exception object: ", e)
+            return action_result.set_status(phantom.APP_ERROR, WHOIS_ERROR_QUERY.format(e)), None
+
+    def finalize(self):
+        # Save the state, this data is saved across actions and app upgrades
+        self.save_state(self._state)
+        return phantom.APP_SUCCESS
 
     def handle_action(self, param):
         """Function that handles all the actions
