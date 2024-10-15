@@ -1,3 +1,1 @@
 **Unreleased**
-
-* updated dependencies in requirements [PSAAS-19226]
