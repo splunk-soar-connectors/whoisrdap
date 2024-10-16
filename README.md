@@ -6,7 +6,7 @@ Connector Version: 2.1.0
 Product Vendor: Generic  
 Product Name: Whois RDAP  
 Product Version Supported (regex): ".\*"  
-Minimum Product Version: 6.2.1  
+Minimum Product Version: 6.3.0  
 
 This app implements investigative actions using RDAP
 
