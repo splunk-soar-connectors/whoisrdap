@@ -1,6 +1,6 @@
 # File: whois_rdap_connector.py
 #
-# Copyright (c) 2016-2022 Splunk Inc.
+# Copyright (c) 2016-2024 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ class WhoisRDAPConnector(BaseConnector):
 
     # actions supported by this script
     ACTION_ID_WHOIS_IP = "whois_ip"
-    ACTION_ID_TEST_CONNECTIVITY = 'test_connectivity'
+    ACTION_ID_TEST_CONNECTIVITY = "test_connectivity"
 
     def __init__(self):
 
@@ -45,7 +45,7 @@ class WhoisRDAPConnector(BaseConnector):
         super(WhoisRDAPConnector, self).__init__()
 
     def _is_valid_ip(self, input_ip_address):
-        """ Function that checks given address and return True if address is valid IPv4 or IPV6 address.
+        """Function that checks given address and return True if address is valid IPv4 or IPV6 address.
 
         :param input_ip_address: IP address
         :return: status (success/failure)
@@ -61,7 +61,7 @@ class WhoisRDAPConnector(BaseConnector):
     def initialize(self):
         # use this to store data that needs to be accessed across actions
         self._state = self.load_state()
-        self.set_validator('ipv6', self._is_valid_ip)
+        self.set_validator("ipv6", self._is_valid_ip)
         return phantom.APP_SUCCESS
 
     def _whois_ip(self, param):
@@ -97,18 +97,18 @@ class WhoisRDAPConnector(BaseConnector):
         summary = action_result.update_summary({})
 
         # Create the summary and the message
-        if ('asn_registry' in whois_response):
-            summary.update({WHOIS_JSON_ASN_REGISTRY: whois_response['asn_registry']})
+        if "asn_registry" in whois_response:
+            summary.update({WHOIS_JSON_ASN_REGISTRY: whois_response["asn_registry"]})
 
-        if ('asn' in whois_response):
-            summary.update({WHOIS_JSON_ASN: whois_response['asn']})
+        if "asn" in whois_response:
+            summary.update({WHOIS_JSON_ASN: whois_response["asn"]})
 
-        if ('asn_country_code' in whois_response):
-            summary.update({WHOIS_JSON_COUNTRY_CODE: whois_response['asn_country_code']})
+        if "asn_country_code" in whois_response:
+            summary.update({WHOIS_JSON_COUNTRY_CODE: whois_response["asn_country_code"]})
 
-        if ('network' in whois_response):
-            nets = whois_response['network']
-            wanted_keys = ['start_address', 'end_address']
+        if "network" in whois_response:
+            nets = whois_response["network"]
+            wanted_keys = ["start_address", "end_address"]
             summary[WHOIS_JSON_NETS] = []
             summary_net = {x: nets[x] for x in wanted_keys}
             summary[WHOIS_JSON_NETS].append(summary_net)
@@ -116,7 +116,7 @@ class WhoisRDAPConnector(BaseConnector):
         action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_test_connectivity(self, param):
-        ip = '8.8.8.8'
+        ip = "8.8.8.8"
 
         self.debug_print("Validating/Querying IP '{0}'".format(ip))
 
@@ -138,10 +138,10 @@ class WhoisRDAPConnector(BaseConnector):
     def _lookup_rdap(self, action_result, ip):
 
         proxy = {}
-        if environ.get('HTTP_PROXY'):
-            proxy['http'] = environ['HTTP_PROXY']
-        if environ.get('HTTPS_PROXY'):
-            proxy['https'] = environ['HTTPS_PROXY']
+        if environ.get("HTTP_PROXY"):
+            proxy["http"] = environ["HTTP_PROXY"]
+        if environ.get("HTTPS_PROXY"):
+            proxy["https"] = environ["HTTPS_PROXY"]
 
         try:
             if proxy:
@@ -178,9 +178,9 @@ class WhoisRDAPConnector(BaseConnector):
         result = None
         action = self.get_action_identifier()
 
-        if (action == self.ACTION_ID_WHOIS_IP):
+        if action == self.ACTION_ID_WHOIS_IP:
             result = self._whois_ip(param)
-        elif (action == self.ACTION_ID_TEST_CONNECTIVITY):
+        elif action == self.ACTION_ID_TEST_CONNECTIVITY:
             self._handle_test_connectivity(param)
         else:
             result = self.unknown_action()
@@ -188,7 +188,7 @@ class WhoisRDAPConnector(BaseConnector):
         return result
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     import sys
 
@@ -199,7 +199,7 @@ if __name__ == '__main__':
     with open(sys.argv[1]) as f:
         in_json = f.read()
         in_json = json.loads(in_json)
-        print(json.dumps(in_json, indent=' ' * 4))
+        print(json.dumps(in_json, indent=" " * 4))
 
         connector = WhoisRDAPConnector()
         connector.print_progress_message = True
