@@ -2,7 +2,7 @@
 # WHOIS RDAP
 
 Publisher: Splunk  
-Connector Version: 2.1.1  
+Connector Version: 2.1.2  
 Product Vendor: Generic  
 Product Name: Whois RDAP  
 Product Version Supported (regex): ".\*"  
