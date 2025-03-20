@@ -1,6 +1,6 @@
 # File: whois_rdap_connector.py
 #
-# Copyright (c) 2016-2024 Splunk Inc.
+# Copyright (c) 2016-2025 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ from phantom.base_connector import BaseConnector
 
 from whois_rdap_consts import *
 
+
 try:
     from urllib2 import ProxyHandler, build_opener
 except ImportError:
@@ -34,15 +35,13 @@ from ipwhois import IPDefinedError, IPWhois
 
 
 class WhoisRDAPConnector(BaseConnector):
-
     # actions supported by this script
     ACTION_ID_WHOIS_IP = "whois_ip"
     ACTION_ID_TEST_CONNECTIVITY = "test_connectivity"
 
     def __init__(self):
-
         # Call the BaseConnectors init first
-        super(WhoisRDAPConnector, self).__init__()
+        super().__init__()
 
     def _is_valid_ip(self, input_ip_address):
         """Function that checks given address and return True if address is valid IPv4 or IPV6 address.
@@ -65,14 +64,13 @@ class WhoisRDAPConnector(BaseConnector):
         return phantom.APP_SUCCESS
 
     def _whois_ip(self, param):
-
         ip = param[phantom.APP_JSON_IP]
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         action_result.set_param({phantom.APP_JSON_IP: ip})
 
-        self.debug_print("Validating/Querying IP '{0}'".format(ip))
+        self.debug_print(f"Validating/Querying IP '{ip}'")
 
         self.save_progress("Querying...")
 
@@ -118,7 +116,7 @@ class WhoisRDAPConnector(BaseConnector):
     def _handle_test_connectivity(self, param):
         ip = "8.8.8.8"
 
-        self.debug_print("Validating/Querying IP '{0}'".format(ip))
+        self.debug_print(f"Validating/Querying IP '{ip}'")
 
         self.save_progress("Querying...")
 
@@ -136,7 +134,6 @@ class WhoisRDAPConnector(BaseConnector):
         return self.set_status_save_progress(phantom.APP_ERROR, WHOIS_ERROR_CONNECTIVITY_TEST)
 
     def _lookup_rdap(self, action_result, ip):
-
         proxy = {}
         if environ.get("HTTP_PROXY"):
             proxy["http"] = environ["HTTP_PROXY"]
@@ -189,7 +186,6 @@ class WhoisRDAPConnector(BaseConnector):
 
 
 if __name__ == "__main__":
-
     import sys
 
     import pudb
