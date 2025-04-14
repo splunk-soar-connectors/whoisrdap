@@ -1,7 +1,7 @@
 # WHOIS RDAP
 
 Publisher: Splunk \
-Connector Version: 2.1.2 \
+Connector Version: 2.1.3 \
 Product Vendor: Generic \
 Product Name: Whois RDAP \
 Minimum Product Version: 6.2.2
