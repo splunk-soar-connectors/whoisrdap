@@ -148,7 +148,7 @@ class WhoisRDAPConnector(BaseConnector):
                 obj_whois = IPWhois(ip, proxy_opener=opener)
             else:
                 obj_whois = IPWhois(ip)
-            whois_response = obj_whois.lookup_rdap()
+            whois_response = obj_whois.lookup_rdap(inc_nir=False)
             return phantom.APP_SUCCESS, whois_response
         except IPDefinedError as e_defined:
             self.error_print("Got IPDefinedError: ", e_defined)
