@@ -1,9 +1,9 @@
 # WHOIS RDAP
 
-Publisher: Splunk \
-Connector Version: 2.1.7 \
-Product Vendor: Generic \
-Product Name: Whois RDAP \
+Publisher: Splunk <br>
+Connector Version: 2.1.7 <br>
+Product Vendor: Generic <br>
+Product Name: Whois RDAP <br>
 Minimum Product Version: 6.2.2
 
 This app implements investigative actions using RDAP
@@ -22,14 +22,14 @@ Copyright (C) 2003-2007, 2009-2011 Nominum, Inc.
 
 ### Supported Actions
 
-[whois ip](#action-whois-ip) - Execute a whois lookup on the given IP \
+[whois ip](#action-whois-ip) - Execute a whois lookup on the given IP <br>
 [test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration
 
 ## action: 'whois ip'
 
 Execute a whois lookup on the given IP
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -159,7 +159,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Validate the asset configuration for connectivity using supplied configuration
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 #### Action Parameters
