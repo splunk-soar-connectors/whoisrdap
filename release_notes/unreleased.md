@@ -1,3 +1,3 @@
 **Unreleased**
 
-* Updated connector validation tooling.
+* Fixed `whois ip` to fail when RDAP cannot query reserved IP addresses.

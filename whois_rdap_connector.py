@@ -152,7 +152,7 @@ class WhoisRDAPConnector(BaseConnector):
             return phantom.APP_SUCCESS, whois_response
         except IPDefinedError as e_defined:
             self.error_print("Got IPDefinedError: ", e_defined)
-            action_result.set_status(phantom.APP_SUCCESS, str(e_defined))
+            action_result.set_status(phantom.APP_ERROR, str(e_defined))
             return phantom.APP_ERROR, None
         except Exception as e:
             self.error_print("Got exception object: ", e)
