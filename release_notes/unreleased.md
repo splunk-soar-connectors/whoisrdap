@@ -1,1 +1,3 @@
 **Unreleased**
+
+* Fixed `whois ip` to fail when RDAP cannot query reserved IP addresses.

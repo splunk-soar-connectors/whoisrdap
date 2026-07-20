@@ -1,6 +1,6 @@
 # File: whois_rdap_connector.py
 #
-# Copyright (c) 2016-2025 Splunk Inc.
+# Copyright (c) 2016-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -152,7 +152,7 @@ class WhoisRDAPConnector(BaseConnector):
             return phantom.APP_SUCCESS, whois_response
         except IPDefinedError as e_defined:
             self.error_print("Got IPDefinedError: ", e_defined)
-            action_result.set_status(phantom.APP_SUCCESS, str(e_defined))
+            action_result.set_status(phantom.APP_ERROR, str(e_defined))
             return phantom.APP_ERROR, None
         except Exception as e:
             self.error_print("Got exception object: ", e)
