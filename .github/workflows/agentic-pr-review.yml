@@ -5,11 +5,6 @@ on:
     branches:
       - "sanchaga/bottest*"
       - "sanchaga/bottest/**"
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - ready_for_review
   workflow_dispatch:
     inputs:
       pr_number:
@@ -21,15 +16,13 @@ permissions:
   contents: read
 
 concurrency:
-  group: reusable-push-agentic-pr-review-${{ github.workflow }}-${{ github.event.pull_request.head.ref || github.ref_name }}
+  group: reusable-push-agentic-pr-review-${{ github.workflow }}-${{ github.ref_name }}
   cancel-in-progress: false
 
 jobs:
   resolve-pr-context:
     runs-on: ubuntu-latest
-    if: >-
-      github.repository != 'splunk-soar-connectors/.github' &&
-      (github.event_name != 'pull_request' || startsWith(github.event.pull_request.head.ref, 'sanchaga/bottest'))
+    if: github.repository != 'splunk-soar-connectors/.github'
     permissions:
       contents: read
       pull-requests: read
@@ -47,12 +40,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           INPUT_PR_NUMBER: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.pr_number || '' }}
-          EVENT_PR_NUMBER: ${{ github.event_name == 'pull_request' && github.event.pull_request.number || '' }}
-          EVENT_IS_DRAFT: ${{ github.event_name == 'pull_request' && github.event.pull_request.draft || 'false' }}
-          EVENT_HEAD_REF: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || '' }}
-          EVENT_HEAD_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || '' }}
-          EVENT_HEAD_REPO_FULL_NAME: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || '' }}
-          BRANCH_NAME: ${{ github.event.pull_request.head.ref || github.ref_name }}
+          BRANCH_NAME: ${{ github.ref_name }}
         run: |
           set -euo pipefail
 
@@ -61,21 +49,23 @@ jobs:
               --repo "${GH_REPO}" \
               --json number,isDraft,headRefName,headRefOid,headRepository \
               --jq '{number,is_draft:.isDraft,head_ref:.headRefName,head_sha:.headRefOid,head_repo_full_name:.headRepository.nameWithOwner}')
-          elif [[ -n "${EVENT_PR_NUMBER}" ]]; then
-            pr_json=$(jq -nc \
-              --argjson number "${EVENT_PR_NUMBER}" \
-              --arg is_draft "${EVENT_IS_DRAFT}" \
-              --arg head_ref "${EVENT_HEAD_REF}" \
-              --arg head_sha "${EVENT_HEAD_SHA}" \
-              --arg head_repo_full_name "${EVENT_HEAD_REPO_FULL_NAME}" \
-              '{number:$number,is_draft:($is_draft == "true"),head_ref:$head_ref,head_sha:$head_sha,head_repo_full_name:$head_repo_full_name}')
           else
-            pr_json=$(gh pr list \
-              --repo "${GH_REPO}" \
-              --state open \
-              --head "${BRANCH_NAME}" \
-              --json number,isDraft,headRefName,headRefOid,headRepository \
-              --jq '.[0] | if . == null then empty else {number,is_draft:.isDraft,head_ref:.headRefName,head_sha:.headRefOid,head_repo_full_name:.headRepository.nameWithOwner} end')
+            pr_json=""
+            for attempt in 1 2 3 4 5 6; do
+              pr_json=$(gh pr list \
+                --repo "${GH_REPO}" \
+                --state open \
+                --head "${BRANCH_NAME}" \
+                --json number,isDraft,headRefName,headRefOid,headRepository \
+                --jq '.[0] | if . == null then empty else {number,is_draft:.isDraft,head_ref:.headRefName,head_sha:.headRefOid,head_repo_full_name:.headRepository.nameWithOwner} end')
+
+              if [[ -n "${pr_json}" ]]; then
+                break
+              fi
+
+              echo "No open PR found yet for ${GH_REPO}@${BRANCH_NAME} on attempt ${attempt}/6."
+              sleep 5
+            done
           fi
 
           if [[ -z "${pr_json}" ]]; then
@@ -94,7 +84,11 @@ jobs:
           echo "pr_number=$(jq -r '.number' <<< "${pr_json}")" >> "${GITHUB_OUTPUT}"
           echo "is_draft=$(jq -r '.is_draft' <<< "${pr_json}")" >> "${GITHUB_OUTPUT}"
           echo "head_ref=$(jq -r '.head_ref' <<< "${pr_json}")" >> "${GITHUB_OUTPUT}"
-          echo "head_sha=$(jq -r '.head_sha' <<< "${pr_json}")" >> "${GITHUB_OUTPUT}"
+          if [[ "${GITHUB_EVENT_NAME}" == "push" ]]; then
+            echo "head_sha=${GITHUB_SHA}" >> "${GITHUB_OUTPUT}"
+          else
+            echo "head_sha=$(jq -r '.head_sha' <<< "${pr_json}")" >> "${GITHUB_OUTPUT}"
+          fi
           echo "head_repo_full_name=$(jq -r '.head_repo_full_name' <<< "${pr_json}")" >> "${GITHUB_OUTPUT}"
 
   pr-labeling:
