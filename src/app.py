@@ -49,6 +49,7 @@ def create_whois_rdap_app() -> App:
 
     @app.test_connectivity()
     def test_connectivity(soar: SOARClient, asset: Asset) -> None:
+        """Validate the asset configuration for connectivity using supplied configuration"""
         logger.debug(f"Validating/Querying IP '{CONNECTIVITY_TEST_IP}'")
         logger.info("Querying...")
         whois_response = lookup_rdap(CONNECTIVITY_TEST_IP)
@@ -56,7 +57,7 @@ def create_whois_rdap_app() -> App:
         logger.info("Parsing response")
         if whois_response.get("query") == CONNECTIVITY_TEST_IP:
             logger.debug("identity test passed")
-            soar.set_message(WHOIS_SUCCESS_CONNECTIVITY_TEST)
+            logger.info(WHOIS_SUCCESS_CONNECTIVITY_TEST)
             return
 
         logger.debug("identity test failed")

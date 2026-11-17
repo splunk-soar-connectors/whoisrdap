@@ -22,12 +22,12 @@ Copyright (C) 2003-2007, 2009-2011 Nominum, Inc.
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - test connectivity <br>
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration <br>
 [whois ip](#action-whois-ip) - Execute a whois lookup on the given IP
 
 ## action: 'test connectivity'
 
-test connectivity
+Validate the asset configuration for connectivity using supplied configuration
 
 Type: **test** <br>
 Read only: **True**
